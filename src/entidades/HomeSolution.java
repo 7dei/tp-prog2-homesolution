@@ -32,7 +32,8 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public void registrarProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
 			String[] cliente, String inicio, String fin) throws IllegalArgumentException {
-		
+	//	como hago este?
+	//	proyectos.put(numeroID, nombre);
 		
 	}
 
@@ -70,7 +71,12 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void finalizarProyecto(Integer numero, String fin) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		
+		for (Proyecto p : proyectos.values()) {
+			if (p.getID()==numero) {
+				p.setEstado(Estado.finalizado);
+			}
+		}
 		
 	}
 
@@ -88,7 +94,12 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public double costoProyecto(Integer numero) {
-		// TODO Auto-generated method stub
+		
+		for (Proyecto p : proyectos.values()) {
+			if (p.getID()==numero) {
+				return p.getCostoFinal();
+			}
+		}
 		return 0;
 	}
 
@@ -139,7 +150,11 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public boolean estaFinalizado(Integer numero) {
-		// TODO Auto-generated method stub
+		for (Proyecto p : proyectos.values()) {
+			if ((p.getID() == numero) && (p.getEstado() == Estado.finalizado)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -187,7 +202,11 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public String consultarProyecto(Integer numero) {
-		// TODO Auto-generated method stub
+		for (Proyecto p : proyectos.values()) {
+			if (p.getID() == numero) {
+				return p.toString();
+			}
+		}		
 		return null;
 	}
 }
