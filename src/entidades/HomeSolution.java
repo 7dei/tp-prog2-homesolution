@@ -14,8 +14,8 @@ public class HomeSolution implements IHomeSolution{
 	public HomeSolution() { 
 		this.proyectos = new HashMap<>();
 		this.empleados = new HashMap<>();
-		this.contadorProyecto = 1;
-		this.contadorLegajo = 1;
+		this.contadorProyecto = 0;
+		this.contadorLegajo = 0;
 	}
 
 	@Override
@@ -31,12 +31,13 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void registrarProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
-			String[] cliente, String inicio, String fin) throws IllegalArgumentException {
-	//	como hago este?
-	//	proyectos.put(numeroID, nombre);
-		
+	        String[] cliente, String inicio, String fin) throws IllegalArgumentException {
+		 
+		contadorProyecto++; // generar id único
+		Proyecto nuevo = new Proyecto(contadorProyecto, titulos, descripcion, dias, domicilio, cliente, inicio, fin);
+		proyectos.put(contadorProyecto, nuevo);
 	}
-
+	
 	@Override
 	public void asignarResponsableEnTarea(Integer numero, String titulo) throws Exception {
 		// TODO Auto-generated method stub
@@ -151,7 +152,7 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public boolean estaFinalizado(Integer numero) {
 		for (Proyecto p : proyectos.values()) {
-			if ((p.getID() == numero) && (p.getEstado() == Estado.finalizado)) {
+			if ((p.getID() == numero) && (p.getEstado().equals(Estado.finalizado))) {
 				return true;
 			}
 		}
@@ -184,7 +185,11 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public String consultarDomicilioProyecto(Integer numero) {
-		// TODO Auto-generated method stub
+		for (Proyecto p : proyectos.values()) {
+			if (p.getID() == numero) {
+				return p.getDireccion();
+			}
+		}
 		return null;
 	}
 

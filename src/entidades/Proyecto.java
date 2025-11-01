@@ -4,49 +4,38 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Proyecto{
+public class Proyecto {
 
-	private HashMap<Integer, Proyecto> historialEmpleados;
-	private HashMap<Integer, Empleado> listaTareas;
-	private int numeroID;
-	private String clienteNombre;
-	private String clienteEmail;
-	private int clienteNumero;
-	private String direccion;
-	private LocalDate fechaInicio;
-	private LocalDate fechaEstimadaFin;
-	private LocalDate fechaRealFin;
-	private String estado;
-	private double costoFinal;
-	
-	
-	public Proyecto(int numeroID, String direccion) {
-	    this.numeroID = numeroID;
-	    this.clienteNombre = clienteNombre;
-	    this.clienteEmail = clienteEmail;
-	    this.clienteNumero = 0;  // String → int
-	    this.direccion = direccion;
-//	    this.fechaInicio = LocalDate.parse(inicio);
-//	    this.fechaEstimadaFin = LocalDate.parse(fin);
-//	    this.fechaRealFin = LocalDate.parse(fin);             
-	    this.estado = Estado.pendiente;
-	    this.costoFinal = 0;
-//	    this.historialEmpleados = new ArrayList<>();
-//	    this.listaTareas = new ArrayList<>(); LOS ARRAYLIST Y LOS LOCALDATE APARECEN MAL. PQ?
-	}
-	
-	public void registrarProyecto(String[] titulos, String[] descripciones, double[] duracion, String string,
-			String[] cliente, String string2, String string3) {
-		
-	}
-	
-	public void registrarEmpleado(String string, int i) {
-		
-	}	
+    private int numeroID;
+    private String clienteNombre;
+    private String clienteEmail;
+    private int clienteNumero;
+    private String direccion;
+    private LocalDate fechaInicio;
+    private LocalDate fechaEstimadaFin;
+    private LocalDate fechaRealFin;
+    private double costoFinal;
+    private ArrayList<Tarea> listaTareas;
+    private ArrayList<Empleado> historialEmpleados;
+    private String estado;
 
-	public void registrarEmpleado(String string, int i, String string2) {
-	
-	}
+    // Constructor que usa los arrays de titulos/descripcion/duracion
+    public Proyecto(int numeroID, String[] titulos, String[] descripcion, double[] duracion,
+                    String direccion, String[] cliente, String inicio, String fin) {
+        this.numeroID = numeroID;
+        this.direccion = direccion;
+        this.clienteNombre = cliente[0] != null ? cliente[0] : "";
+        this.clienteEmail = cliente[1] != null ? cliente[1] : "";
+        this.clienteNumero = Integer.parseInt(cliente[2]);
+        this.fechaInicio = LocalDate.parse(inicio);
+        this.fechaEstimadaFin = LocalDate.parse(fin);
+        this.fechaRealFin = this.fechaEstimadaFin;
+        this.estado = Estado.pendiente;
+        this.costoFinal = 0;
+        this.listaTareas = new ArrayList<>();
+        this.historialEmpleados = new ArrayList<>();
+    }
+
 
 	public void obtenerHistorialEmpleados() {
 		
