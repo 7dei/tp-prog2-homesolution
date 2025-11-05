@@ -8,7 +8,7 @@ public class Empleado {
 	private String nombre;
 	private int legajo;
 	private double valorHora;
-	private boolean disponible;
+	boolean disponible;
 	private double calcularCosto;
 	private double horas;
 	private double cantdias;
@@ -30,10 +30,16 @@ public class Empleado {
 	        this.empleados= new HashMap<>();
 	        this.noAsignados= new ArrayList<>();
 	}
+	
+	// ============================================================
+    // REGISTRA LAS TAREAS CON RETRASOS
+    // ============================================================
+	
 	public void registrarRetraso() {
 		tareasConRetraso++;
 	}
-	 // ============================================================
+	
+	// ============================================================
     // REGISTRO DE NUEVOS EMPLEADOS
     // ============================================================
 	
@@ -49,7 +55,8 @@ public class Empleado {
 		
 		empleados.put(legajo, nuevo);
 	}
-	 // ============================================================
+	
+	// ============================================================
     // EMPLEADOS NO ASIGNADOS
     // ============================================================
 	
@@ -62,6 +69,7 @@ public class Empleado {
         }
         return noAsignados.toArray();
 	}
+	
 	// ============================================================
     // TUVO RETRASOS
     // ============================================================
@@ -91,5 +99,15 @@ public class Empleado {
 			}
 		}
 		return mejor;
+	}
+	
+	// ============================================================
+    // CALCULAR COSTO
+    // ============================================================
+	//CALCULA LAS HORAS TRABAJADAS Y EL VALORHORA
+	
+	public double calcularCosto(Empleado e) {
+		e.calcularCosto= e.horas * e.valorHora;
+		return e.calcularCosto;
 	}
 }
