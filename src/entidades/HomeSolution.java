@@ -18,15 +18,19 @@ public class HomeSolution implements IHomeSolution{
 		this.contadorLegajo = 0;
 	}
 
-	@Override
+	@Override // sobrecarga
 	public void registrarEmpleado(String nombre, double valor) throws IllegalArgumentException {
-//		return empleados.put(valor, "nombre");
+		contadorLegajo++;
+		Empleado nuevo = new Empleado(nombre, contadorLegajo, valor);
+		empleados.put(contadorLegajo, nuevo);
 		
 	}
 
 	@Override
 	public void registrarEmpleado(String nombre, double valor, String categoria) throws IllegalArgumentException {
 		contadorLegajo++;
+		Empleado nuevo = new Empleado(nombre, contadorLegajo, valor, categoria);
+		empleados.put(contadorLegajo, nuevo);
 	}
 
 	@Override
@@ -40,7 +44,7 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public void asignarResponsableEnTarea(Integer numero, String titulo) throws Exception {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -53,20 +57,32 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public void registrarRetrasoEnTarea(Integer numero, String titulo, double cantidadDias)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		Proyecto p = proyectos.get(numero);
+		for (Tarea t : p.getTareas()) {
+			if (t.getTitulo().equals(titulo)) {
+				t.setRetraso(cantidadDias);
+			}
+		}
 		
 	}
 
 	@Override
 	public void agregarTareaEnProyecto(Integer numero, String titulo, String descripcion, double dias)
 			throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		Proyecto p = proyectos.get(numero);
+		Tarea nueva = new Tarea(titulo, descripcion, dias);
+		p.setTareas(nueva);
 	}
 
 	@Override
 	public void finalizarTarea(Integer numero, String titulo) throws Exception {
-		// TODO Auto-generated method stub
+		Proyecto p = proyectos.get(numero);
+		ArrayList<Tarea> tareas = p.getTareas();
+		for (Tarea t : tareas) {
+			if (t.getTitulo().equals(titulo) && t.getTerminado()==false) {
+				t.setTerminado(true);
+			}
+		}
 		
 	}
 
@@ -164,30 +180,31 @@ public class HomeSolution implements IHomeSolution{
 	}
 
 	@Override
-	public ArrayList<Empleado> empleadosAsignadosAProyecto(Integer numero) {
+	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer numero) {
 		Proyecto p = proyectos.get(numero);
-		return p.getHistorialEmpleados();
+		return null;
+		//	return p.getHistorialEmpleados(); // como lo ahgo list tupla
 	}
 
 	@Override
 	public Object[] tareasProyectoNoAsignadas(Integer numero) {
-		Proyecto p = proyectos.get(numero);
-		ArrayList<Tarea> tareas = new ArrayList<>();
-		tareas = p.obtenerListaTareas();
-		
-		ArrayList<Tarea> tareasNoAsignadas =  new ArrayList<>();
-		for (Tarea t : tareas) {
-			if (t.getTerminado()==false){   //aca no se como hacer para saber si no estan asignadas, pq no hay ningun valor
-				tareasNoAsignadas.add(t);
-			}
-		}
-		return tareasNoAsignadas; //pide object, q significa?
+	    Proyecto p = proyectos.get(numero);
+	    if (p == null) return new Object[0];  // Array vacío si no existe
+	    
+	    ArrayList<Tarea> tareas = p.obtenerListaTareas();
+	    ArrayList<String> tareasNoAsignadas = new ArrayList<>();
+	    
+	    for (Tarea t : tareas) {
+	        if (!t.tieneResponsable()) {
+	            tareasNoAsignadas.add(t.getTitulo());
+	        }
+	    }
+	    return tareasNoAsignadas.toArray();
 	}
-
 	@Override
 	public Object[] tareasDeUnProyecto(Integer numero) {
 		Proyecto p = proyectos.get(numero);
-		return p.obtenerListaTareas();
+		return p.obtenerListaTareas().toArray();
 	}
 
 	@Override
@@ -210,7 +227,11 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public List<Tupla<Integer, String>> empleados() {
-		return null;
+		List<Tupla<Integer,String>>lista = new ArrayList<>();
+		for (Empleado e : empleados.values()) {
+			lista.add(new Tupla<> (e.getLegajo(), e.getNombre()));
+		}
+		return lista;
 	}
 
 	@Override

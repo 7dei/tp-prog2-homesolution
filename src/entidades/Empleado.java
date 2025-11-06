@@ -18,7 +18,8 @@ public class Empleado {
 	private HashMap<Integer, Empleado> empleados;
     private List<Empleado> noAsignados = new ArrayList<>();
 
-	
+	private boolean asignado;
+    
 	public Empleado(String nombre, int legajo, double valorHora, String categoria){
 		this.nombre=nombre;
 		this.legajo=legajo;
@@ -29,6 +30,7 @@ public class Empleado {
 	        this.totalRetraso = 0;
 	        this.empleados= new HashMap<>();
 	        this.noAsignados= new ArrayList<>();
+	   this.asignado = false;
 	}
 	
 	// ============================================================
@@ -117,5 +119,9 @@ public class Empleado {
 	
 	public int getCuantoRetraso() {
 		return totalRetraso;
+	}
+	
+	public boolean getAsignado() {
+		return asignado;
 	}
 }

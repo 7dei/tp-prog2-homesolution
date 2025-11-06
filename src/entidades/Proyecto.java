@@ -77,6 +77,17 @@ public class Proyecto {
 		return costoFinal;
 	}
 	
+	public ArrayList<Empleado> getHistorialEmpleados() {
+		return historialEmpleados;
+	}
+	
+	public ArrayList<Tarea> getTareas() {
+		return listaTareas;
+	}
+	
+	public void setTareas(Tarea t) {
+		listaTareas.add(t);
+	}
 	
 	public String toString() {
 		return "Proyecto #" + numeroID + " - " + direccion;

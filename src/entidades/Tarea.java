@@ -9,14 +9,14 @@ public class Tarea {
 	private String titulo;
 	private String descripcion;
 	private double cantdias;
-	private int diasRetraso;
+	private double diasRetraso;
 	private boolean terminado;
 	private int dias;
 	private Empleado responsable;
 	private double duracionTotal;
 	private Map<String, Tarea> tareas;
 	
-	private Tarea (String titulo, String descripcion, double cantDias){
+	public Tarea (String titulo, String descripcion, double cantDias){
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.cantdias = cantdias;
@@ -82,4 +82,34 @@ public void resgistrarRetraso(int dias) {
 		responsable.registrarRetraso();
 	}
 }
+
+public void setRetraso(double cantidadDias) {
+	this.diasRetraso = cantidadDias;
+}
+
+public boolean tieneResponsable() {
+	return responsable != null;
+}
+
+public void setResponsable(Empleado e) {
+	this.responsable = e;
+}
+
+public boolean getTerminado() {
+	return terminado;
+}
+
+public void setTerminado(boolean estado) {
+	this.terminado = estado; 
+}
+
+public String getTitulo() {
+	return titulo;
+}
+
+public void setRetraso(double cantidadDias) {
+	// TODO Auto-generated method stub
+	
+}
+
 }
