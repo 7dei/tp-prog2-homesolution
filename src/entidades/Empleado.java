@@ -33,6 +33,20 @@ public class Empleado {
 	   this.asignado = false;
 	}
 	
+	// constructor que cree nuevo para que me deje ejecutar el jUnit pq todavia diegod no hizo categorias.
+	public Empleado(String nombre, int legajo, double valorHora) {
+	    this.nombre = nombre;
+	    this.legajo = legajo;
+	    this.valorHora = valorHora;
+	    this.disponible = true;
+	    this.tareasAsignadas = new ArrayList<>();
+	    this.tareasConRetraso = 0;
+	    this.totalRetraso = 0;
+	    this.empleados = new HashMap<>();
+	    this.noAsignados = new ArrayList<>();
+	    this.asignado = false;
+	}
+	
 	// ============================================================
     // REGISTRA LAS TAREAS CON RETRASOS
     // ============================================================
@@ -45,7 +59,7 @@ public class Empleado {
     // REGISTRO DE NUEVOS EMPLEADOS
     // ============================================================
 	
-	public void registrarEmpleado(String nombre,int legajo,double  valorHora) throws IllegalArgumentException {
+	public void registrarEmpleado(String nombre,int legajo,double valorHora) throws IllegalArgumentException {
 		//validaciones
 		
 		if (valorHora <= 0) throw new IllegalArgumentException("valor hora invalido");
@@ -111,6 +125,14 @@ public class Empleado {
 	public double calcularCosto(Empleado e) {
 		e.calcularCosto= e.horas * e.valorHora;
 		return e.calcularCosto;
+	}
+	
+	public int getLegajo() {
+		return legajo;
+	}
+	
+	public String getNombre() {
+		return nombre;
 	}
 	
 	public int getRetraso() {

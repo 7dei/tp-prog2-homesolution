@@ -26,7 +26,8 @@ public class Proyecto {
         this.direccion = direccion;
         this.clienteNombre = cliente[0] != null ? cliente[0] : "";
         this.clienteEmail = cliente[1] != null ? cliente[1] : "";
-        this.clienteNumero = Integer.parseInt(cliente[2]);
+        this.clienteNumero = (cliente[2].isEmpty()) ? 0 : Integer.parseInt(cliente[2]); 
+        // agregue ternario para que no de error si el usuario pone 0. 
         this.fechaInicio = LocalDate.parse(inicio);
         this.fechaEstimadaFin = LocalDate.parse(fin);
         this.fechaRealFin = this.fechaEstimadaFin;

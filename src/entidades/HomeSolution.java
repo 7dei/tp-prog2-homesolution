@@ -37,21 +37,21 @@ public class HomeSolution implements IHomeSolution{
 	public void registrarProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
 	        String[] cliente, String inicio, String fin) throws IllegalArgumentException {
 		 
-		contadorProyecto++; // generar id único
+		contadorProyecto++; // generar id Unico
 		Proyecto nuevo = new Proyecto(contadorProyecto, titulos, descripcion, dias, domicilio, cliente, inicio, fin);
 		proyectos.put(contadorProyecto, nuevo);
 	}
 	
 	@Override
 	public void asignarResponsableEnTarea(Integer numero, String titulo) throws Exception {
-		
-		
+		//FALTA	POR DIEGOD
+		/		
 	}
 
 	@Override
 	public void asignarResponsableMenosRetraso(Integer numero, String titulo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		//FALTA	POR DIEGOD
+		/		
 	}
 
 	@Override
@@ -101,14 +101,15 @@ public class HomeSolution implements IHomeSolution{
 	public void reasignarEmpleadoEnProyecto(Integer numero, Integer legajo, String titulo) throws Exception {
 		Proyecto p = proyectos.get(numero);
 		Empleado e = empleados.get(legajo);
-		return ; // no se como seguir este, porque ademas mi compa no puso el proyecto del empleado, deberia haber hecho eso o no
-		
+	// FALTA POR DIEGOD
+		/
 	}
 
 	@Override
 	public void reasignarEmpleadoConMenosRetraso(Integer numero, String titulo) throws Exception {
 		// TODO Auto-generated method stub
-		
+	//FALTA	POR DIEGOD
+		/
 	}
 
 	@Override
@@ -159,12 +160,14 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public Object[] empleadosNoAsignados() {
-//		for (Empleado e : empleados) {
-//			for (Empleado noAsignado : e.empleadosNoAsignados()) (esto no deberia ser un array o no, no tiene sentido,)
-//			deberia ser un valor unico y yo acceder al estado de ese empleado?).
-//			}
-//		}
-		return null;
+		ArrayList<Empleado>lista = new ArrayList<>();
+	
+		for (Empleado e : empleados.values()) {
+			if (!e.getAsignado()) {
+				lista.add(e);
+			}
+		}
+		return lista.toArray();
 	}
 
 	@Override
@@ -182,8 +185,13 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer numero) {
 		Proyecto p = proyectos.get(numero);
-		return null;
-		//	return p.getHistorialEmpleados(); // como lo ahgo list tupla
+		List<Tupla<Integer, String>>nueva = new ArrayList<>();
+		for (Empleado e : p.getHistorialEmpleados()) {
+			if (e.getAsignado()) {
+				nueva.add(new Tupla<>(e.getLegajo(), e.getNombre()));
+			}
+		}
+		return nueva;
 	}
 
 	@Override
@@ -229,7 +237,7 @@ public class HomeSolution implements IHomeSolution{
 	public List<Tupla<Integer, String>> empleados() {
 		List<Tupla<Integer,String>>lista = new ArrayList<>();
 		for (Empleado e : empleados.values()) {
-			lista.add(new Tupla<> (e.getLegajo(), e.getNombre()));
+			lista.add(new Tupla<>(e.getLegajo(), e.getNombre()));
 		}
 		return lista;
 	}
