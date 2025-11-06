@@ -37,8 +37,12 @@ public class Proyecto {
     }
 
 
-	public void obtenerHistorialEmpleados() {
-		
+	public ArrayList<Empleado> obtenerHistorialEmpleados() {
+		return historialEmpleados;
+	}
+	
+	public ArrayList<Tarea> obtenerListaTareas() {
+		return listaTareas;
 	}
 	
 	public void setEstado(String estado) {

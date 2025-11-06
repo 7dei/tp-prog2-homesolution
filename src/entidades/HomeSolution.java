@@ -26,7 +26,7 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void registrarEmpleado(String nombre, double valor, String categoria) throws IllegalArgumentException {
-		
+		contadorLegajo++;
 	}
 
 	@Override
@@ -83,7 +83,9 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void reasignarEmpleadoEnProyecto(Integer numero, Integer legajo, String titulo) throws Exception {
-		// TODO Auto-generated method stub
+		Proyecto p = proyectos.get(numero);
+		Empleado e = empleados.get(legajo);
+		return ; // no se como seguir este, porque ademas mi compa no puso el proyecto del empleado, deberia haber hecho eso o no
 		
 	}
 
@@ -95,13 +97,9 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public double costoProyecto(Integer numero) {
-		
-		for (Proyecto p : proyectos.values()) {
-			if (p.getID()==numero) {
-				return p.getCostoFinal();
-			}
-		}
-		return 0;
+
+		Proyecto p = proyectos.get(numero);
+		return (p!=null) ? p.getCostoFinal() : 0; //ESTE NO LO ENTENDI BIEN, SI PODES EXPLICAME PQ EL ? Y EL : 0
 	}
 
 	@Override
@@ -145,42 +143,51 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public Object[] empleadosNoAsignados() {
-		// TODO Auto-generated method stub
+//		for (Empleado e : empleados) {
+//			for (Empleado noAsignado : e.empleadosNoAsignados()) (esto no deberia ser un array o no, no tiene sentido,)
+//			deberia ser un valor unico y yo acceder al estado de ese empleado?).
+//			}
+//		}
 		return null;
 	}
 
 	@Override
 	public boolean estaFinalizado(Integer numero) {
-		for (Proyecto p : proyectos.values()) {
-			if ((p.getID() == numero) && (p.getEstado().equals(Estado.finalizado))) {
-				return true;
-			}
-		}
-		return false;
+		Proyecto p = proyectos.get(numero);
+		return p != null && p.getEstado().equals(Estado.finalizado); 
 	}
 
 	@Override
 	public int consultarCantidadRetrasosEmpleado(Integer legajo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Empleado e = empleados.get(legajo);
+		return e.getCuantoRetraso();
 	}
 
 	@Override
-	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Empleado> empleadosAsignadosAProyecto(Integer numero) {
+		Proyecto p = proyectos.get(numero);
+		return p.getHistorialEmpleados();
 	}
 
 	@Override
 	public Object[] tareasProyectoNoAsignadas(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
+		Proyecto p = proyectos.get(numero);
+		ArrayList<Tarea> tareas = new ArrayList<>();
+		tareas = p.obtenerListaTareas();
+		
+		ArrayList<Tarea> tareasNoAsignadas =  new ArrayList<>();
+		for (Tarea t : tareas) {
+			if (t.getTerminado()==false){   //aca no se como hacer para saber si no estan asignadas, pq no hay ningun valor
+				tareasNoAsignadas.add(t);
+			}
+		}
+		return tareasNoAsignadas; //pide object, q significa?
 	}
 
 	@Override
 	public Object[] tareasDeUnProyecto(Integer numero) {
-		// TODO Auto-generated method stub
-		return null;
+		Proyecto p = proyectos.get(numero);
+		return p.obtenerListaTareas();
 	}
 
 	@Override
@@ -195,13 +202,14 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public boolean tieneRestrasos(Integer legajo) {
-		// TODO Auto-generated method stub
-		return false;
+		Empleado e = empleados.get(legajo);
+		if (e.getRetraso() > 0) {
+			return true;
+		}else { return false;}
 	}
 
 	@Override
 	public List<Tupla<Integer, String>> empleados() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

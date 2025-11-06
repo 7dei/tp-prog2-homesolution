@@ -13,17 +13,17 @@ public class Empleado {
 	private double horas;
 	private double cantdias;
 	private int tareasConRetraso;
-	private double totalRetraso;
+	private int totalRetraso;
 	private List<Tarea> tareasAsignadas;
 	private HashMap<Integer, Empleado> empleados;
     private List<Empleado> noAsignados = new ArrayList<>();
 
 	
-	private Empleado(String nombre, int legajo, double valorHora){
+	public Empleado(String nombre, int legajo, double valorHora, String categoria){
 		this.nombre=nombre;
 		this.legajo=legajo;
-		 this.valorHora = valorHora;
-	        this.disponible = true;
+		this.valorHora = valorHora;
+	    this.disponible = true;
 	        this.tareasAsignadas = new ArrayList<>();
 	        this.tareasConRetraso = 0;
 	        this.totalRetraso = 0;
@@ -109,5 +109,13 @@ public class Empleado {
 	public double calcularCosto(Empleado e) {
 		e.calcularCosto= e.horas * e.valorHora;
 		return e.calcularCosto;
+	}
+	
+	public int getRetraso() {
+		return tareasConRetraso;
+	}
+	
+	public int getCuantoRetraso() {
+		return totalRetraso;
 	}
 }

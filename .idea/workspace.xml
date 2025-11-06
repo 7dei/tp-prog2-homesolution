@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="725ef2d2-cbff-4539-8bc5-b5de580bcde4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/bin/entidades/Empleado.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entidades/Empleado.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entidades/HomeSolution.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entidades/HomeSolution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entidades/Proyecto.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entidades/Proyecto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entidades/Tareas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entidades/empleadoContratado.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/gui/PanelManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/gui/PanelManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entidades/Empleado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entidades/Empleado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entidades/HomeSolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entidades/HomeSolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entidades/Proyecto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entidades/Proyecto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entidades/Tareas.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="357Kb4eE2fzuHk6jcjVlSy5TsaK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/diego/Downloads/interfaz",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="725ef2d2-cbff-4539-8bc5-b5de580bcde4" name="Changes" comment="" />
+      <created>1762455737276</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762455737276</updated>
+      <workItem from="1762455738442" duration="164000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
