@@ -45,13 +45,13 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public void asignarResponsableEnTarea(Integer numero, String titulo) throws Exception {
 		//FALTA	POR DIEGOD
-		/		
+		//		
 	}
 
 	@Override
 	public void asignarResponsableMenosRetraso(Integer numero, String titulo) throws Exception {
 		//FALTA	POR DIEGOD
-		/		
+		//		
 	}
 
 	@Override
@@ -99,17 +99,17 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void reasignarEmpleadoEnProyecto(Integer numero, Integer legajo, String titulo) throws Exception {
-		Proyecto p = proyectos.get(numero);
-		Empleado e = empleados.get(legajo);
+	//	Proyecto p = proyectos.get(numero);
+	//	Empleado e = empleados.get(legajo);
 	// FALTA POR DIEGOD
-		/
+		//
 	}
 
 	@Override
 	public void reasignarEmpleadoConMenosRetraso(Integer numero, String titulo) throws Exception {
 		// TODO Auto-generated method stub
 	//FALTA	POR DIEGOD
-		/
+		//
 	}
 
 	@Override
