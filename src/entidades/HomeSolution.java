@@ -21,7 +21,7 @@ public class HomeSolution implements IHomeSolution{
 	@Override // sobrecarga
 	public void registrarEmpleado(String nombre, double valor) throws IllegalArgumentException {
 		contadorLegajo++;
-		Empleado nuevo = new Empleado(nombre, contadorLegajo, valor);
+		Empleado nuevo = new EmpleadoContratado(nombre, contadorLegajo, valor);
 		empleados.put(contadorLegajo, nuevo);
 		
 	}
@@ -29,7 +29,7 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public void registrarEmpleado(String nombre, double valor, String categoria) throws IllegalArgumentException {
 		contadorLegajo++;
-		Empleado nuevo = new Empleado(nombre, contadorLegajo, valor, categoria);
+		Empleado nuevo = new EmpleadoPlanta(nombre, contadorLegajo, valor, categoria);
 		empleados.put(contadorLegajo, nuevo);
 	}
 
@@ -50,9 +50,9 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void asignarResponsableMenosRetraso(Integer numero, String titulo) throws Exception {
-		Proyecto p = proyectos.get(numero);
-        Empleado empleadoMenosRetraso = null;
-        Tarea tarea = p.getTareas();
+//		Proyecto p = proyectos.get(numero);
+//        Empleado empleadoMenosRetraso = null;
+//        Tarea tarea = p.getTareas();
 
 
         //FALTA	POR DIEGOD
@@ -118,9 +118,8 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public double costoProyecto(Integer numero) {
-
 		Proyecto p = proyectos.get(numero);
-		return (p!=null) ? p.getCostoFinal() : 0; //ESTE NO LO ENTENDI BIEN, SI PODES EXPLICAME PQ EL ? Y EL : 0
+		return (p!=null) ? p.getCostoFinal() : 0;
 	}
 
 	@Override

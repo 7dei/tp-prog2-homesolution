@@ -36,7 +36,35 @@ public class Proyecto {
         this.listaTareas = new ArrayList<>();
         this.historialEmpleados = new ArrayList<>();
     }
+    
+    public void finalizarProyecto() {
+    	this.estado = Estado.finalizado;
+    	this.calcularCostoFinal();
+    }
+	
+	public double calcularCostoFinal() {
+		double costoTareas = 0;
+		
+		for (Tarea t : listaTareas) {
+			costoTareas += t.calcularCosto();
+		}
+		if (tuvoRetrasos()) {
+			return costoTareas * 1.25;
+		}
+		else {
+			return costoTareas * 1.35;
+		}
+	}
 
+    public boolean tuvoRetrasos(){
+    	for (Tarea t : listaTareas) {
+    		if (t.tuvoRetrasos()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }    
+    
 
 	public ArrayList<Empleado> obtenerHistorialEmpleados() {
 		return historialEmpleados;

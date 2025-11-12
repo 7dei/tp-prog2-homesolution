@@ -14,7 +14,6 @@ public class Tarea {
 	private int dias;
 	private Empleado responsable;
 	private double duracionTotal;
-	private Map<String, Tarea> tareas; // SUGERENCIA: Este atributo no debería estar acá, es responsabilidad de HomeSolution
 	
 	public Tarea (String titulo, String descripcion, double cantDias){
         this.titulo = titulo;
@@ -127,9 +126,8 @@ public class Tarea {
     /**
      * Verifica si la tarea tiene retrasos
      */
-    public boolean tieneRetrasos() {
-        // TODO: Implementar
-        // return diasRetraso > 0;
+    public boolean tuvoRetrasos() {
+    	return diasRetraso > 0;
     }
     
     /**
@@ -143,6 +141,7 @@ public class Tarea {
     // ============================================================
     // GETTERS Y SETTERS EXISTENTES
     // ============================================================
+    
     
     public void setRetraso(double cantidadDias) {
         this.diasRetraso = cantidadDias;

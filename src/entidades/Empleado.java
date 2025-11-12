@@ -16,7 +16,7 @@ public abstract class Empleado {
     protected Empleado(String nombre, int legajo) {
         this.nombre = nombre;
         this.legajo = legajo;
-        this.asignado = true;
+        this.asignado = false;
         this.tareasAsignadas = new ArrayList<>();
         this.tareasConRetraso = 0;
     }
