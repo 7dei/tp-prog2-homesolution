@@ -50,8 +50,13 @@ public class HomeSolution implements IHomeSolution{
 
 	@Override
 	public void asignarResponsableMenosRetraso(Integer numero, String titulo) throws Exception {
-		//FALTA	POR DIEGOD
-		//		
+		Proyecto p = proyectos.get(numero);
+        Empleado empleadoMenosRetraso = null;
+        Tarea tarea = p.getTareas();
+
+
+        //FALTA	POR DIEGOD
+        //
 	}
 
 	@Override
@@ -102,7 +107,6 @@ public class HomeSolution implements IHomeSolution{
 	//	Proyecto p = proyectos.get(numero);
 	//	Empleado e = empleados.get(legajo);
 	// FALTA POR DIEGOD
-		//
 	}
 
 	@Override

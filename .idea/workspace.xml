@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="725ef2d2-cbff-4539-8bc5-b5de580bcde4" name="Changes" comment="" />
+    <list default="true" id="725ef2d2-cbff-4539-8bc5-b5de580bcde4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entidades/HomeSolution.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entidades/HomeSolution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entidades/Proyecto.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entidades/Proyecto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entidades/HomeSolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entidades/HomeSolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entidades/Proyecto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entidades/Proyecto.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +18,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -27,9 +37,28 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/diego/Downloads/interfaz",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="interfaz" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="interfaz" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -47,6 +76,12 @@
       <updated>1762455737276</updated>
       <workItem from="1762455738442" duration="164000" />
       <workItem from="1762460329325" duration="30000" />
+      <workItem from="1762585747162" duration="313000" />
+      <workItem from="1762586092032" duration="550000" />
+      <workItem from="1762635214676" duration="5000" />
+      <workItem from="1762972046726" duration="163000" />
+      <workItem from="1762972229084" duration="429000" />
+      <workItem from="1762972730974" duration="95000" />
     </task>
     <servers />
   </component>
@@ -63,5 +98,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
