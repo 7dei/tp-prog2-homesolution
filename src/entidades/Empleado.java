@@ -38,11 +38,7 @@ public abstract class Empleado {
 
     public void registrarRetraso() {
         tareasConRetraso++;
-    } //ESTAS DOS NO SON LO MISMO? TIENE Q HABER DIFERENCIA ENTRE AMBAS
-    public void incrementarTareasConRetraso() {
-    	tareasConRetraso++;
     }
-    
 
     public int getLegajo() {
         return legajo;

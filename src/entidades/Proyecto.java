@@ -15,7 +15,7 @@ public class Proyecto {
     private LocalDate fechaEstimadaFin;
     private LocalDate fechaRealFin;
     private double costoFinal;
-    private ArrayList<Tarea> listaTareas;
+    private HashMap<String,Tarea> listaTareas;
     private ArrayList<Empleado> historialEmpleados;
     private String estado;
 
@@ -33,45 +33,82 @@ public class Proyecto {
         this.fechaRealFin = this.fechaEstimadaFin;
         this.estado = Estado.pendiente;
         this.costoFinal = 0;
-        this.listaTareas = new ArrayList<>();
+        this.listaTareas = new HashMap<>();
         this.historialEmpleados = new ArrayList<>();
+        
+        for (int i = 0; i < titulos.length; i++) {
+            Tarea nuevaTarea = new Tarea(titulos[i], descripcion[i], duracion[i]);
+            listaTareas.put(titulos[i], nuevaTarea);
+        }
+        
     }
     
     public void finalizarProyecto() {
     	this.estado = Estado.finalizado;
+    	this.fechaRealFin = LocalDate.parse(Estado.finalizado);
     	this.calcularCostoFinal();
+    	
+    	for (Tarea t : listaTareas.values()) {
+            if (t.getResponsable() != null) {
+                t.getResponsable().setAsignado(false);
+            }
+        }
     }
 	
-	public double calcularCostoFinal() {
-		double costoTareas = 0;
-		
-		for (Tarea t : listaTareas) {
-			costoTareas += t.calcularCosto();
-		}
-		if (tuvoRetrasos()) {
-			return costoTareas * 1.25;
-		}
-		else {
-			return costoTareas * 1.35;
-		}
-	}
+    public double calcularCostoFinal() {
+        double costoTareas = 0;
+        
+        for (Tarea t : listaTareas.values()) {
+            costoTareas += t.calcularCosto();
+        }
+        
+        if (tuvoRetrasos()) {
+            this.costoFinal = costoTareas * 1.25;
+        } else {
+            this.costoFinal = costoTareas * 1.35;
+        }
+        
+        return this.costoFinal;
+    }
 
     public boolean tuvoRetrasos(){
-    	for (Tarea t : listaTareas) {
+    	for (Tarea t : listaTareas.values()) {
     		if (t.tuvoRetrasos()) {
     			return true;
     		}
     	}
     	return false;
-    }    
+    }
     
+    //============================================================
+    //MARCA SI LA TAREA FINALIZO
+    //============================================================
+    // ERROR LISTA TAREAS
+	public void finalizacion(String titulo, int dias, boolean terminado) {
+        Tarea tarea= listaTareas.get(titulo);
+        if (tarea == null) throw new IllegalArgumentException ("no existe ninguna tarea con ese ID");
+        if (tarea.getTerminado()) {
+	        tarea.dias= dias;
+	        tarea.setTerminado(terminado);
+	        tarea.duracionTotal= tarea.cantDias + tarea.diasRetraso;
+    }
+	}  
 
 	public ArrayList<Empleado> obtenerHistorialEmpleados() {
 		return historialEmpleados;
 	}
 	
-	public ArrayList<Tarea> obtenerListaTareas() {
+	public HashMap<String, Tarea> obtenerListaTareas() {
 		return listaTareas;
+	}
+
+//me permite no tener que hacer un ciclo for para encontrar el titulo. O(1)
+	public Tarea getTareaPorTitulo(String titulo) throws Exception {
+	    Tarea t = this.listaTareas.get(titulo);
+	    if (t == null) {
+	        throw new Exception("La tarea con el título '" + titulo + "' no existe en este proyecto.");
+	    }
+	    return t;
 	}
 	
 	public void setEstado(String estado) {
@@ -108,14 +145,22 @@ public class Proyecto {
 	
 	public ArrayList<Empleado> getHistorialEmpleados() {
 		return historialEmpleados;
+	}	
+	
+	public void setTareas(String titulo, Tarea t) {
+		listaTareas.put(titulo, t);
 	}
 	
-	public ArrayList<Tarea> getTareas() {
-		return listaTareas;
+	public LocalDate getFechaRealFin() {
+		return fechaRealFin;
 	}
 	
-	public void setTareas(Tarea t) {
-		listaTareas.add(t);
+	public void setFechaRealFin(LocalDate fecha) {
+		this.fechaRealFin = fecha;
+	}	
+	
+	public void setFechaEstimadaFin(LocalDate fecha) {
+		this.fechaEstimadaFin = fecha;
 	}
 	
 	@Override
@@ -162,7 +207,7 @@ public class Proyecto {
 	        sb.append("   (No hay tareas registradas)\n");
 	    } else {
 	        int contador = 1;
-	        for (Tarea t : listaTareas) {  // ✅ FOREACH (obligatorio)
+	        for (Tarea t : listaTareas.values()) {  // ✅ FOREACH (obligatorio)
 	            sb.append("   ").append(contador).append(". ");
 	            sb.append(t.toString());  // ⚠️ toString() de Tarea SOLO devuelve título
 	            
