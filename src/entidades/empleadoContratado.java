@@ -1,8 +1,5 @@
 package entidades;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EmpleadoContratado extends Empleado {
     private double valorHora;
     
@@ -19,6 +16,23 @@ public class EmpleadoContratado extends Empleado {
     	// medio dia = 4 horas, si no cada dia tiene 8 horas.
     	double horas = (dias == 0.5) ? 4 : dias * 8;
     	return horas * valorHora;
+    }
 // FALTA EL RESTO DE METODOS, COMO SETTER Y GETTERS
+    public double getValorHora() {
+    	return valorHora;
+    }
+    
+    public void setValorHora(double valorHora) {
+    	this.valorHora = valorHora;
+    }
+    
+    @Override
+    public String toString() {
+    	return String.valueOf(legajo);
+    }
+
+    @Override
+    protected boolean verificarIREP() {
+        return super.verificarIREP() && valorHora >= 0;
     }
 }

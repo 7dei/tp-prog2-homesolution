@@ -1,6 +1,7 @@
 package entidades;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ public class HomeSolution implements IHomeSolution{
 	@Override // sobrecarga
 	public void registrarEmpleado(String nombre, double valor) throws IllegalArgumentException {
 		contadorLegajo++;
+		if (valor<0) {throw new IllegalArgumentException("Ingrese un valor que no sea negativo.");} 
 		Empleado nuevo = new EmpleadoContratado(nombre, contadorLegajo, valor);
 		empleados.put(contadorLegajo, nuevo);
 		
@@ -30,6 +32,7 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public void registrarEmpleado(String nombre, double valor, String categoria) throws IllegalArgumentException {
 		contadorLegajo++;
+		if (valor<0) {throw new IllegalArgumentException("Ingrese un valor que no sea negativo.");} 
 		Empleado nuevo = new EmpleadoPlanta(nombre, contadorLegajo, valor, categoria);
 		empleados.put(contadorLegajo, nuevo);
 	}
@@ -37,7 +40,11 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public void registrarProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
 	        String[] cliente, String inicio, String fin) throws IllegalArgumentException {
-		 
+		if (titulos==null || descripcion==null) { throw new IllegalArgumentException("Ingrese un titulo o descripcion.");}
+		if (domicilio==null || cliente==null) { throw new IllegalArgumentException("Ingrese un domicilio o nombre de cliente.");}
+		if (inicio==null || fin==null) { throw new IllegalArgumentException("Ingrese una fecha de inicio/fin correcta.");}
+		if (dias==null) { throw new IllegalArgumentException("Ingrese al menos un dia.");}
+		
 		contadorProyecto++; // generar id Unico
 		Proyecto nuevo = new Proyecto(contadorProyecto, titulos, descripcion, dias, domicilio, cliente, inicio, fin);
 		proyectos.put(contadorProyecto, nuevo);
@@ -47,6 +54,9 @@ public class HomeSolution implements IHomeSolution{
 	public void asignarResponsableEnTarea(Integer numero, String titulo) throws Exception {
 		Proyecto p = proyectos.get(numero);
 		if (p == null) throw new Exception("Proyecto no encontrado.");
+		if (p.getEstado().equals(Estado.finalizado)) {
+		    throw new Exception("No se pueden asignar empleados a un proyecto finalizado");
+		}
 
 		Empleado responsable = null;
 		// Buscar el primer empleado disponible (sigue siendo O(N) de empleados)
@@ -68,12 +78,17 @@ public class HomeSolution implements IHomeSolution{
 		t.setResponsable(responsable);
 		responsable.setAsignado(true); // <--- CORRECCIÓN: Marcarlo como ocupado
 		responsable.agregarTareaAsignada(t); // <--- AGREGAR: Registrar tarea en empleado
+		p.agregarEmpleadoAlHistorial(responsable);
 	}
 
 	@Override
 	public void asignarResponsableMenosRetraso(Integer numero, String titulo) throws Exception {
 		Proyecto p = proyectos.get(numero);
 		if (p == null) throw new Exception("Proyecto no encontrado.");
+		
+		if (p.getEstado().equals(Estado.finalizado)) {
+		    throw new Exception("No se pueden asignar empleados a un proyecto finalizado");
+		}
 		
 		Empleado menosRetraso = null;
 		
@@ -97,28 +112,25 @@ public class HomeSolution implements IHomeSolution{
 		t.setResponsable(menosRetraso);
 		menosRetraso.setAsignado(true);
 		menosRetraso.agregarTareaAsignada(t); // AGREGAR
+		p.agregarEmpleadoAlHistorial(menosRetraso);
 	}
 
 	// --------------------------------------------------------------------------------
 		// METODO CON ACCESO O(1)
 		// --------------------------------------------------------------------------------
-		@Override
+	@Override
 	public void registrarRetrasoEnTarea(Integer numero, String titulo, double cantidadDias)
-			throws IllegalArgumentException {
-		Proyecto p = proyectos.get(numero);
-		if (p == null) throw new IllegalArgumentException("Proyecto no encontrado.");
-			
-		try {
-			Tarea t = p.getTareaPorTitulo(titulo);
-			t.setRetraso(cantidadDias);
-			
-			if (t.getResponsable() != null) {
-					t.getResponsable().registrarRetraso();
-			}
-				
-		} catch (Exception e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
+	        throws IllegalArgumentException {
+	    Proyecto p = proyectos.get(numero);
+	    if (p == null) throw new IllegalArgumentException("Proyecto no encontrado.");
+	        
+	    try {
+	        Tarea t = p.getTareaPorTitulo(titulo);
+	        t.resgistrarRetraso((int)cantidadDias);
+	            
+	    } catch (Exception e) {
+	        throw new IllegalArgumentException(e.getMessage());
+	    }
 	}
 
 		
@@ -166,17 +178,29 @@ public class HomeSolution implements IHomeSolution{
 	}
 
 	@Override
-	public void finalizarProyecto(Integer numero, String fin) throws IllegalArgumentException { 
-		Proyecto p = proyectos.get(numero); 
-		
-		if (p==null) { throw new IllegalArgumentException("Proyecto no encontrado"); }
-		LocalDate fechaFin = LocalDate.parse(fin);
-		if (fechaFin.isBefore(p.getFechaInicio())) {
-			throw new IllegalArgumentException("La fecha de finalizacion no puede ser menor a la de inicio."); }
-		
-		p.setEstado(Estado.finalizado);
-		}
-	
+	public void finalizarProyecto(Integer numero, String fin) throws IllegalArgumentException {
+	    Proyecto p = proyectos.get(numero); 
+	    
+	    if (p == null) { 
+	        throw new IllegalArgumentException("Error: Proyecto con ID " + numero + " no encontrado."); 
+	    }	    
+	    LocalDate fechaFin;	    
+	    try {
+	        fechaFin = LocalDate.parse(fin); 
+	    } catch (DateTimeParseException e) {
+	        throw new IllegalArgumentException("Error de fecha: El formato es año/mes/dia, o el mes/dia/año ingresado es invalido.");
+	    }
+	    
+	    if (fechaFin.isBefore(p.getFechaInicio())) {
+	        throw new IllegalArgumentException("Error: La fecha de finalización no puede ser anterior a la de inicio."); 
+	    }
+	    
+	    if (fechaFin.isBefore(p.getFechaEstimadaFin())) {
+	        throw new IllegalArgumentException("Error: La fecha de finalización real no puede ser anterior a la fecha estimada de finalización.");
+	    }
+	    
+	    p.finalizarProyecto(fin);
+	}
 
 	@Override
 	public void reasignarEmpleadoEnProyecto(Integer numero, Integer legajo, String titulo) throws Exception {
@@ -186,14 +210,13 @@ public class HomeSolution implements IHomeSolution{
 		Empleado nuevoResponsable = empleados.get(legajo);
 		if (nuevoResponsable == null) throw new Exception("Empleado no encontrado.");
 		
-		// 1. Acceso O(1) a la tarea
-		Tarea t = p.getTareaPorTitulo(titulo); // <-- O(1)
+		// acceso O(1) a la tarea
+		Tarea t = p.getTareaPorTitulo(titulo);
 		
-		// 2. Reasignación (O(1))
 		Empleado viejoResponsable = t.getResponsable();
 		
 		if (viejoResponsable != null) {
-			viejoResponsable.setAsignado(false); // Liberar al viejo
+			viejoResponsable.setAsignado(false); // libera al viejo
 		}
 		
 		if (nuevoResponsable.getAsignado()) {
@@ -201,8 +224,9 @@ public class HomeSolution implements IHomeSolution{
 		}
 		
 		t.setResponsable(nuevoResponsable);
-		nuevoResponsable.setAsignado(true); // Ocupar al nuevo
-		nuevoResponsable.agregarTareaAsignada(t); // AGREGAR
+		nuevoResponsable.setAsignado(true);
+		nuevoResponsable.agregarTareaAsignada(t);
+		p.agregarEmpleadoAlHistorial(nuevoResponsable);
 	}
 
 
@@ -210,6 +234,9 @@ public class HomeSolution implements IHomeSolution{
 	public void reasignarEmpleadoConMenosRetraso(Integer numero, String titulo) throws Exception {
 	    Proyecto p = proyectos.get(numero);
 	    if (p == null) throw new Exception("Proyecto no encontrado.");
+	    if (p.getEstado().equals(Estado.finalizado)) {
+	        throw new Exception("No se pueden reasignar empleados en un proyecto finalizado");
+	    }
 	    
 	    // 1. Encontrar el empleado con menos retraso (sigue siendo O(N) global de empleados)
 	    Empleado menosRetraso = null;
@@ -239,12 +266,15 @@ public class HomeSolution implements IHomeSolution{
 	    t.setResponsable(menosRetraso);
 	    menosRetraso.setAsignado(true); // Ocupar al nuevo (O(1))
 	    menosRetraso.agregarTareaAsignada(t); // AGREGAR (O(1))
+	    p.agregarEmpleadoAlHistorial(menosRetraso);
 	}
 
 	@Override
 	public double costoProyecto(Integer numero) {
 		Proyecto p = proyectos.get(numero); // <-- O(1)
-		return (p!=null) ? p.getCostoFinal() : 0;
+		if (p==null) return 0;
+		
+		return p.calcularCostoFinal();
 	}
 
 	@Override
@@ -311,26 +341,15 @@ public class HomeSolution implements IHomeSolution{
 	}
 
 
-	public void agregarTarea(Integer numero, String titulo, String descripcion, double cantdias) throws IllegalArgumentException {
-        Proyecto p = proyectos.get(numero);
-    	if (p.obtenerListaTareas().containsKey(titulo)
-    	) throw new IllegalArgumentException ("Ya existe una tarea con ese nombre");
-        Tarea nueva= new Tarea(titulo, descripcion, cantdias);
-        p.setTareas(titulo, nueva);
-    }
-    
-  
-
 	@Override
 	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer numero) {
 		Proyecto p = proyectos.get(numero);
-		List<Tupla<Integer, String>>nueva = new ArrayList<>();
-		for (Empleado e : p.getHistorialEmpleados()) {
-			if (e.getAsignado()) {
-				nueva.add(new Tupla<>(e.getLegajo(), e.getNombre()));
-			}
-		}
-		return nueva;
+	    List<Tupla<Integer, String>> nueva = new ArrayList<>();
+
+	    for (Empleado e : p.getHistorialEmpleados()) {
+	        nueva.add(new Tupla<>(e.getLegajo(), e.getNombre()));
+	    }
+	    return nueva;
 	}
 	
 	@Override

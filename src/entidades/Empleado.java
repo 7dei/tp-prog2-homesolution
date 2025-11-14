@@ -1,7 +1,6 @@
 package entidades;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class Empleado {
@@ -66,11 +65,9 @@ public abstract class Empleado {
 
     @Override
     public String toString() {
-        // TODO: Implementar
-        // Debe mostrar info básica del empleado
-    	return null;
+    	return String.valueOf(legajo);
     }
-  
+    
     protected boolean verificarIREP() {
         return (nombre != null && !nombre.isEmpty() && legajo > 0 && tareasAsignadas 
         != null &&tareasConRetraso >= 0);

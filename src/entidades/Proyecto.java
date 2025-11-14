@@ -43,9 +43,10 @@ public class Proyecto {
         
     }
     
-    public void finalizarProyecto() {
+    
+    public void finalizarProyecto(String fin) {
     	this.estado = Estado.finalizado;
-    	this.fechaRealFin = LocalDate.parse(Estado.finalizado);
+    	this.fechaRealFin = LocalDate.parse(fin);
     	this.calcularCostoFinal();
     	
     	for (Tarea t : listaTareas.values()) {
@@ -78,21 +79,13 @@ public class Proyecto {
     		}
     	}
     	return false;
+    }  
+
+    public void agregarEmpleadoAlHistorial(Empleado e) {
+    	if (e!=null && !historialEmpleados.contains(e)) {
+    		historialEmpleados.add(e);
+    	}
     }
-    
-    //============================================================
-    //MARCA SI LA TAREA FINALIZO
-    //============================================================
-    // ERROR LISTA TAREAS
-	public void finalizacion(String titulo, int dias, boolean terminado) {
-        Tarea tarea= listaTareas.get(titulo);
-        if (tarea == null) throw new IllegalArgumentException ("no existe ninguna tarea con ese ID");
-        if (tarea.getTerminado()) {
-	        tarea.dias= dias;
-	        tarea.setTerminado(terminado);
-	        tarea.duracionTotal= tarea.cantDias + tarea.diasRetraso;
-    }
-	}  
 
 	public ArrayList<Empleado> obtenerHistorialEmpleados() {
 		return historialEmpleados;
@@ -166,35 +159,13 @@ public class Proyecto {
 	@Override
 	public String toString() {
 	    StringBuilder sb = new StringBuilder();  // ✅ STRINGBUILDER (obligatorio)
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // ENCABEZADO
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("═══════════════════════════════════════\n");
-	    sb.append("           PROYECTO #").append(numeroID).append("\n");
-	    sb.append("═══════════════════════════════════════\n\n");
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // INFORMACIÓN GENERAL
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("📍 DOMICILIO:\n");
-	    sb.append("   ").append(direccion).append("\n\n");
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // INFORMACIÓN DEL CLIENTE
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("👤 CLIENTE:\n");
+	    sb.append("PROYECTO #").append(numeroID).append("\n");
+	    sb.append("DOMICILIO:\n");
+	    sb.append("   ").append(direccion).append("\n");
+	    sb.append("CLIENTE:\n");
 	    sb.append("   Nombre: ").append(clienteNombre).append("\n");
-	    sb.append("   Email: ").append(clienteEmail).append("\n");
-	    sb.append("   Teléfono: ").append(clienteNumero).append("\n\n");
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // ESTADO Y FECHAS
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("📊 ESTADO DEL PROYECTO:\n");
 	    sb.append("   Estado actual: ").append(estado).append("\n");
 	    sb.append("   Fecha de inicio: ").append(fechaInicio).append("\n");
-	    sb.append("   Fecha estimada de fin: ").append(fechaEstimadaFin).append("\n");
 	    sb.append("   Fecha real de fin: ").append(fechaRealFin).append("\n\n");
 	    
 	    // ═══════════════════════════════════════════════════════════
@@ -221,23 +192,8 @@ public class Proyecto {
 	        }
 	    }
 	    sb.append("\n");
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // INFORMACIÓN FINANCIERA
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("💰 INFORMACIÓN FINANCIERA:\n");
-	    sb.append("───────────────────────────────────────\n");
 	    sb.append("   Costo total: $").append(String.format("%.2f", costoFinal)).append("\n");
-	    
-	    // ⚠️ Esto lo podrás activar cuando tengas el método tuvoRetrasos()
-	    // sb.append("   Tuvo retrasos: ").append(tuvoRetrasos() ? "Sí" : "No").append("\n");
-	    sb.append("   Tuvo retrasos: (Pendiente de implementar)\n");
-	    
-	    sb.append("\n");
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // HISTORIAL DE EMPLEADOS
-	    // ═══════════════════════════════════════════════════════════
+
 	    sb.append("👥 EMPLEADOS ASIGNADOS:\n");
 	    sb.append("───────────────────────────────────────\n");
 	    

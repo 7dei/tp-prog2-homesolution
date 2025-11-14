@@ -38,9 +38,9 @@ public class Tarea {
 //        return responsable;
 //    }
 
-    public void resgistrarRetraso(int dias) {
-        if (dias < 0) throw new IllegalArgumentException ("Cantidad de dias de retraso invalidos");
-        this.diasRetraso += dias; // Simplificar
+    public void resgistrarRetraso(double cantidadDias) {
+        if (cantidadDias < 0) throw new IllegalArgumentException ("Cantidad de dias de retraso invalidos");
+        this.diasRetraso += cantidadDias; // Simplificar
         this.duracionTotal = diasRetraso + cantDias;
         if (responsable != null) {
             responsable.registrarRetraso(); // CORREGIR: nombre del método
@@ -62,15 +62,17 @@ public class Tarea {
      * Debe ser O(1) - el HashMap está en HomeSolution
      */
     public void reasignarEmpleado(Empleado nuevoEmpleado) {
+
+    	if (nuevoEmpleado == null) {throw new IllegalArgumentException("El nuevo empleado no puede ser null.");}
+    	if (nuevoEmpleado.getAsignado()) { throw new IllegalArgumentException("El empleado ya esta asignado!");}
+    		
     	if (responsable != null) {
     		responsable.setAsignado(false);
     		responsable = nuevoEmpleado;
-    		responsable.setAsignado(true);
     	}
-    	else {
-    		responsable = nuevoEmpleado;
-    		responsable.setAsignado(true);
-    	}
+    	this.responsable = nuevoEmpleado; 
+    	nuevoEmpleado.setAsignado(true);
+    	nuevoEmpleado.agregarTareaAsignada(this); //THIS
     }
 
     public double calcularCosto() {
@@ -86,12 +88,13 @@ public class Tarea {
     	return diasRetraso > 0;
     }
     
+    public void agregarRetraso(double cantidadDias) {
+        this.diasRetraso += cantidadDias;
+        this.duracionTotal = cantDias + diasRetraso;
+    }   
+    
     public boolean tieneEmpleadoAsignado() {
     	return responsable != null;
-    }
-
-    public void setRetraso(double cantidadDias) {
-        this.diasRetraso = cantidadDias;
     }
 
     public boolean tieneResponsable() {
@@ -136,21 +139,7 @@ public class Tarea {
 
     @Override
     public String toString() {
-        // TODO: Implementar
-        // IMPORTANTE: Solo retornar el título según enunciado parte 3
-        // return titulo;
+    	return titulo;
     }
-    
-    /**
-     * Método opcional para debugging con información completa
-     */
-    
-    private boolean verificarIREP() {
-    	return (titulo != null && !titulo.isEmpty() &&
-    			descripcion != null && !descripcion.isEmpty() &&
-    			cantDias >= 0 &&
-    			diasRetraso >= 0 &&
-    			(responsable == null || !responsable.getAsignado()) &&
-    			(!terminado || responsable != null));
-    }
+
 }

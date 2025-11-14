@@ -12,12 +12,14 @@ public class EmpleadoPlanta extends Empleado {
 
     @Override
     public double calcularCostoTarea(double dias) {
-        //medio dia cuenta como dia completo para empleados de planta
         double diasACalcular = (dias == 0.5) ? 1.0 : dias;
-        
         double costoBase = diasACalcular * valorDia;
-        
-        return costoBase * 1.02;
+
+        if (tareasConRetraso > 0) {
+            return costoBase;
+        } else {
+            return costoBase * 1.02;
+        }
     }
     
     
@@ -40,9 +42,7 @@ public class EmpleadoPlanta extends Empleado {
     
     @Override
     public String toString() {
-        return "EmpleadoPlanta [Legajo: " + legajo + ", Nombre: " + nombre + 
-               ", ValorDia: $" + valorDia + ", Categoria: " + categoria + 
-               ", Disponible: " + !asignado + "]";
+    	return String.valueOf(legajo);
     }
     
     @Override
