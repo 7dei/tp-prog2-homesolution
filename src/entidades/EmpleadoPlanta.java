@@ -2,7 +2,7 @@ package entidades;
 
 public class EmpleadoPlanta extends Empleado {
     private double valorDia;
-    private String categoria; // "INICIAL", "TÉCNICO", "EXPERTO"
+    private String categoria;
 
     public EmpleadoPlanta(String nombre, int legajo, double valorDia, String categoria) {
         super(nombre, legajo);

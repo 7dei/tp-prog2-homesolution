@@ -1,9 +1,5 @@
 package entidades;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class Tarea {
 
 	private String titulo;
@@ -18,38 +14,23 @@ public class Tarea {
 	public Tarea (String titulo, String descripcion, double cantDias){
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.cantDias = cantDias; // CORREGIR: estaba sin asignar
+        this.cantDias = cantDias;
         this.diasRetraso = 0;
         this.dias = 0;
         this.terminado = false;
         this.responsable = null;
-        this.duracionTotal = cantDias; // CORREGIR: usar el parámetro
+        this.duracionTotal = cantDias;
     }
-
-//    //============================================================
-//    //BUSCA EMPLEADO EFICIENTE
-//    //============================================================
-//    // SUGERENCIA: Este método debería estar en HomeSolution, no en Tarea
-//    // Una tarea solo conoce a SU responsable, no busca empleados
-//    public Empleado buscarEmpleadoEficiente() {
-//        if (responsable == null) {
-//            return null;
-//        }
-//        return responsable;
-//    }
 
     public void resgistrarRetraso(double cantidadDias) {
         if (cantidadDias < 0) throw new IllegalArgumentException ("Cantidad de dias de retraso invalidos");
-        this.diasRetraso += cantidadDias; // Simplificar
+        this.diasRetraso += cantidadDias;
         this.duracionTotal = diasRetraso + cantDias;
         if (responsable != null) {
-            responsable.registrarRetraso(); // CORREGIR: nombre del método
+            responsable.registrarRetraso();
         }
     }
-    /**
-     * Finaliza la tarea y libera al empleado asignado
-     * El empleado queda en el historial del proyecto
-     */
+
     public void finalizarTarea() {
     	terminado = true;
     	if (responsable != null) {
@@ -57,10 +38,6 @@ public class Tarea {
     	}
     }
     
-    /**
-     * Reasigna la tarea a un nuevo empleado
-     * Debe ser O(1) - el HashMap está en HomeSolution
-     */
     public void reasignarEmpleado(Empleado nuevoEmpleado) {
 
     	if (nuevoEmpleado == null) {throw new IllegalArgumentException("El nuevo empleado no puede ser null.");}

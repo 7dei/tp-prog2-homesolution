@@ -78,6 +78,11 @@ public class Proyecto {
     			return true;
     		}
     	}
+    	
+    	if ((fechaRealFin) != null && fechaEstimadaFin != null && fechaRealFin.isAfter(fechaEstimadaFin)) {
+    		return true;
+    	}
+    	
     	return false;
     }  
 
@@ -95,9 +100,9 @@ public class Proyecto {
 		return listaTareas;
 	}
 
-//me permite no tener que hacer un ciclo for para encontrar el titulo. O(1)
+ //me permite no tener que hacer un ciclo for para encontrar el titulo. O(1)
 	public Tarea getTareaPorTitulo(String titulo) throws Exception {
-	    Tarea t = this.listaTareas.get(titulo);
+	    Tarea t = listaTareas.get(titulo);
 	    if (t == null) {
 	        throw new Exception("La tarea con el título '" + titulo + "' no existe en este proyecto.");
 	    }
@@ -158,64 +163,26 @@ public class Proyecto {
 	
 	@Override
 	public String toString() {
-	    StringBuilder sb = new StringBuilder();  // ✅ STRINGBUILDER (obligatorio)
-	    sb.append("PROYECTO #").append(numeroID).append("\n");
-	    sb.append("DOMICILIO:\n");
-	    sb.append("   ").append(direccion).append("\n");
-	    sb.append("CLIENTE:\n");
-	    sb.append("   Nombre: ").append(clienteNombre).append("\n");
-	    sb.append("   Estado actual: ").append(estado).append("\n");
-	    sb.append("   Fecha de inicio: ").append(fechaInicio).append("\n");
-	    sb.append("   Fecha real de fin: ").append(fechaRealFin).append("\n\n");
+	    // StringBuilder es OBLIGATORIO por el enunciado 
+	    StringBuilder sb = new StringBuilder();
 	    
-	    // ═══════════════════════════════════════════════════════════
-	    // LISTA DE TAREAS (FOREACH OBLIGATORIO)
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("📋 TAREAS DEL PROYECTO:\n");
-	    sb.append("───────────────────────────────────────\n");
+	    // --- Datos del proyecto (número, domicilio, cliente, fecha fin)  ---
+	    sb.append("Proyecto: #" + numeroID);
+	    sb.append(" - Domicilio: ").append(direccion).append("\n");
+	    sb.append("Cliente: ").append(clienteNombre);
+	    sb.append(" - Fecha Finalización: ").append(fechaRealFin);
+	    sb.append("\nCosto Final: $").append(String.format("%.2f", costoFinal));
+	    sb.append("\nTuvo Retrasos: ").append(tuvoRetrasos() ? "SI" : "NO").append("\n\n");
 	    
+	    sb.append("TAREAS REALIZADAS:\n");
 	    if (listaTareas.isEmpty()) {
-	        sb.append("   (No hay tareas registradas)\n");
+	        sb.append("No hay tareas registradas\n");
 	    } else {
-	        int contador = 1;
-	        for (Tarea t : listaTareas.values()) {  // ✅ FOREACH (obligatorio)
-	            sb.append("   ").append(contador).append(". ");
-	            sb.append(t.toString());  // ⚠️ toString() de Tarea SOLO devuelve título
-	            
-	            // Indicar si está terminada (si tu compañero tiene el método)
-	            if (t.getTerminado()) {
-	                sb.append(" ✓ (Finalizada)");
-	            }
-	            sb.append("\n");
-	            
-	            contador++;
+	        for (Tarea t : listaTareas.values()) { 
+	            sb.append(" - ").append(t.getTitulo());
 	        }
 	    }
-	    sb.append("\n");
-	    sb.append("   Costo total: $").append(String.format("%.2f", costoFinal)).append("\n");
-
-	    sb.append("👥 EMPLEADOS ASIGNADOS:\n");
-	    sb.append("───────────────────────────────────────\n");
-	    
-	    if (historialEmpleados.isEmpty()) {
-	        sb.append("   (No hay empleados asignados)\n");
-	    } else {
-	        for (Empleado emp : historialEmpleados) {  // ✅ FOREACH (obligatorio)
-	            sb.append("   - Legajo: ").append(emp.getLegajo());
-	            sb.append(" | Nombre: ").append(emp.getNombre());
-	            sb.append("\n");
-	        }
-	    }
-	    
-	    sb.append("\n");
-	    
-	    // ═══════════════════════════════════════════════════════════
-	    // PIE
-	    // ═══════════════════════════════════════════════════════════
-	    sb.append("═══════════════════════════════════════\n");
 	    
 	    return sb.toString();
 	}
-
-
 }

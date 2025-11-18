@@ -11,7 +11,7 @@ public abstract class Empleado {
     protected int tareasConRetraso;
     protected List<Tarea> tareasAsignadas;
     
-    // Constructor protegido para las clases hijas
+    // constructor protegido para las clases hijas
     protected Empleado(String nombre, int legajo) {
         this.nombre = nombre;
         this.legajo = legajo;
@@ -20,11 +20,6 @@ public abstract class Empleado {
         this.tareasConRetraso = 0;
     }
     
-    /**
-     * Calcula el costo de una tarea según el tipo de empleado
-     * @param dias cantidad de días de la tarea (puede ser 0.5)
-     * @return costo calculado
-     */
     public abstract double calcularCostoTarea(double dias);
     
     public boolean tuvoRetrasos() {
@@ -55,7 +50,7 @@ public abstract class Empleado {
         this.asignado = asignado;
     }
     
-    public int getTareasConRetraso() { // RENOMBRAR desde getRetraso() // NO ENTIENDO ESTO, PQ ASI?
+    public int getTareasConRetraso() {
         return tareasConRetraso;
     }
     
